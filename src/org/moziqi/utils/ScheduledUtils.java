@@ -4,11 +4,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 
 public class ScheduledUtils {
@@ -55,13 +56,28 @@ public class ScheduledUtils {
 		mHandler.post(runnable);
 	}
 
+	/**
+	 * http://blog.csdn.net/henny_fack/article/details/51745643
+	 * http://blog.csdn.net/bingshushu/article/details/50433643
+	 * @param clazz
+	 * @param action
+	 * @param code
+	 * @param delay
+	 */
+	@SuppressLint("NewApi")
 	public void startAlarmBroadcast(Class<?> clazz, String action, int code, long delay) {
 		Intent intent = new Intent(mContext, clazz);
 		intent.setAction(action);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, code, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 		AlarmManager manager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		manager.cancel(pendingIntent);
-		manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), delay, pendingIntent);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+		} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+		} else {
+			manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), delay, pendingIntent);
+		}
 	}
 
 	public void stopAlarmBroadcast(Class<?> clazz, String action, int code) {

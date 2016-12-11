@@ -17,9 +17,9 @@ import android.os.Message;
 
 public class ScheduledService extends Service {
 
-	private final static int SCHEDULE_CODE = 1;
+	public final static int SCHEDULE_CODE = 1;
 
-	private final static long SHEDULED_TIME = 1 * 60 * 60 * 1000L; // 一小时
+	public final static long SHEDULED_TIME = 1 * 60 * 60 * 1000L; // 一小时
 	// private final static long SHEDULED_TIME = 30 * 1000L; // 一小时
 
 	private Handler handler = new Handler() {
