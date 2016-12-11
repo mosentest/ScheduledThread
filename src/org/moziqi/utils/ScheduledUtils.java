@@ -72,9 +72,9 @@ public class ScheduledUtils {
 		AlarmManager manager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 		manager.cancel(pendingIntent);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+			manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + delay, pendingIntent);
 		} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pendingIntent);
+			manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + delay, pendingIntent);
 		} else {
 			manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), delay, pendingIntent);
 		}
