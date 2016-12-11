@@ -53,7 +53,7 @@ public class ScheduledService extends Service {
 		// 启动定时器
 		// 1.handler实现定时器
 		handler.removeMessages(SCHEDULE_CODE);
-		handler.sendEmptyMessageDelayed(SCHEDULE_CODE, SHEDULED_TIME);
+		handler.sendEmptyMessage(SCHEDULE_CODE);
 		// 2.ScheduledThreadPoolExecutor
 		ScheduledUtils.getInstance(getApplicationContext()).doSchedule(new Run(getApplicationContext(), "2.ScheduledThreadPoolExecutor"), SHEDULED_TIME);
 		// 3.alarm
