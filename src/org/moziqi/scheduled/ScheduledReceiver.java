@@ -1,17 +1,21 @@
 package org.moziqi.scheduled;
 
+import org.moziqi.utils.LogDebug;
 import org.moziqi.utils.ScheduledUtils;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.widget.Toast;
 
 public class ScheduledReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
+		LogDebug.e(context, action);
+		Toast.makeText(context, "action:" + action, Toast.LENGTH_SHORT).show();
 		if ("org.moziqi.sheduled.action".equals(action)) {
 			// 接受到定时器，启动service
 			Intent startService = new Intent(context, AlarmService.class);
