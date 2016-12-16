@@ -15,6 +15,7 @@ public class ScheduledReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		String action = intent.getAction();
 		LogDebug.e(context, action);
+		//http://blog.csdn.net/ocean2006/article/details/40806819
 		Toast.makeText(context, "action:" + action, Toast.LENGTH_SHORT).show();
 		if ("org.moziqi.sheduled.action".equals(action)) {
 			// 接受到定时器，启动service
